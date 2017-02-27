@@ -1,4 +1,4 @@
-package com.easemob.livedemo.ui.activity;
+package cn.ucai.live.ui.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.easemob.livedemo.ui;
+package cn.ucai.live.ui;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;

@@ -1,4 +1,4 @@
-package com.easemob.livedemo.ui.widget;
+package cn.ucai.live.ui.widget;
 
 import android.content.Context;
 import android.os.Handler;
@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.easemob.livedemo.R;
+import cn.ucai.live.R;
 import com.github.florent37.viewanimator.AnimationBuilder;
 import com.github.florent37.viewanimator.AnimationListener;
 import com.github.florent37.viewanimator.ViewAnimator;

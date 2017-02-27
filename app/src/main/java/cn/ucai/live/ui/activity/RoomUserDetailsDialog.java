@@ -1,4 +1,4 @@
-package com.easemob.livedemo.ui.activity;
+package cn.ucai.live.ui.activity;
 
 import android.app.Dialog;
 import android.graphics.Color;
@@ -18,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import com.easemob.livedemo.R;
+import cn.ucai.live.R;
 
 /**
  * Created by wei on 2016/7/25.

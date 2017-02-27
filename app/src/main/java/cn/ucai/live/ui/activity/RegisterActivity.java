@@ -1,4 +1,4 @@
-package com.easemob.livedemo.ui.activity;
+package cn.ucai.live.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.easemob.livedemo.R;
+import cn.ucai.live.R;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
 

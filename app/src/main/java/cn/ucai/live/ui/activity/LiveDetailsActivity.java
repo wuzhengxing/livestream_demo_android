@@ -1,4 +1,4 @@
-package com.easemob.livedemo.ui.activity;
+package cn.ucai.live.ui.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,8 +13,9 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.easemob.livedemo.R;
-import com.easemob.livedemo.data.model.LiveRoom;
+import cn.ucai.live.data.model.LiveRoom;
+
+import cn.ucai.live.R;
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;

@@ -1,8 +1,8 @@
-package com.easemob.livedemo.ui.activity;
+package cn.ucai.live.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import com.easemob.livedemo.R;
+import cn.ucai.live.R;
 
 /**
  * Created by wei on 2016/7/27.

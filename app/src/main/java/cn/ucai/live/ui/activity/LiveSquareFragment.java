@@ -1,4 +1,4 @@
-package com.easemob.livedemo.ui.activity;
+package cn.ucai.live.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import com.easemob.livedemo.R;
+import cn.ucai.live.R;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,10 +1,10 @@
-package com.easemob.livedemo.utils;
+package cn.ucai.live.utils;
 
 import android.widget.Toast;
 
-import com.easemob.livedemo.I;
-import com.easemob.livedemo.LiveApplication;
-import com.easemob.livedemo.R;
+import cn.ucai.live.I;
+import cn.ucai.live.LiveApplication;
+import cn.ucai.live.R;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.easemob.livedemo.ui.activity;
+package cn.ucai.live.ui.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -18,8 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.easemob.livedemo.R;
-import com.easemob.livedemo.data.TestDataRepository;
+import cn.ucai.live.R;
+import cn.ucai.live.data.TestDataRepository;
 import java.util.ArrayList;
 import java.util.List;
 

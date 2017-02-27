@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.easemob.livedemo.ui.widget;
+package cn.ucai.live.ui.widget;
 
 import android.animation.TypeEvaluator;
 import android.graphics.PointF;

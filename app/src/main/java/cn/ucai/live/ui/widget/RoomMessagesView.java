@@ -1,4 +1,4 @@
-package com.easemob.livedemo.ui.widget;
+package cn.ucai.live.ui.widget;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,7 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.easemob.livedemo.R;
+import cn.ucai.live.R;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;

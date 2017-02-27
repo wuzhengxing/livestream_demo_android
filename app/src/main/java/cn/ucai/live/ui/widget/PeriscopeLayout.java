@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.easemob.livedemo.ui.widget;
+package cn.ucai.live.ui.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -36,7 +36,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.easemob.livedemo.R;
+import cn.ucai.live.R;
 
 import java.util.Random;
 

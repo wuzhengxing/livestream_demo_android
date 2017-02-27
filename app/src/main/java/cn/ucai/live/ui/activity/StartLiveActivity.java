@@ -1,4 +1,4 @@
-package com.easemob.livedemo.ui.activity;
+package cn.ucai.live.ui.activity;
 
 import android.content.Context;
 import android.media.AudioManager;
@@ -21,11 +21,12 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.easemob.livedemo.R;
-import com.easemob.livedemo.data.TestDataRepository;
-import com.easemob.livedemo.data.model.LiveRoom;
-import com.easemob.livedemo.data.model.LiveSettings;
-import com.easemob.livedemo.utils.Log2FileUtil;
+import cn.ucai.live.data.TestDataRepository;
+import cn.ucai.live.data.model.LiveRoom;
+import cn.ucai.live.data.model.LiveSettings;
+import cn.ucai.live.utils.Log2FileUtil;
+
+import cn.ucai.live.R;
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;

@@ -1,4 +1,4 @@
-package com.easemob.livedemo.ui.activity;
+package cn.ucai.live.ui.activity;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,15 +15,17 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.ucai.live.LiveConstants;
+import cn.ucai.live.ui.widget.BarrageLayout;
+import cn.ucai.live.utils.Utils;
+
 import com.bumptech.glide.Glide;
-import com.easemob.livedemo.DemoConstants;
-import com.easemob.livedemo.R;
-import com.easemob.livedemo.data.TestAvatarRepository;
-import com.easemob.livedemo.ui.widget.BarrageLayout;
-import com.easemob.livedemo.ui.widget.LiveLeftGiftView;
-import com.easemob.livedemo.ui.widget.PeriscopeLayout;
-import com.easemob.livedemo.ui.widget.RoomMessagesView;
-import com.easemob.livedemo.utils.Utils;
+import cn.ucai.live.R;
+import cn.ucai.live.data.TestAvatarRepository;
+import cn.ucai.live.ui.widget.LiveLeftGiftView;
+import cn.ucai.live.ui.widget.PeriscopeLayout;
+import cn.ucai.live.ui.widget.RoomMessagesView;
+
 import com.github.florent37.viewanimator.AnimationListener;
 import com.github.florent37.viewanimator.ViewAnimator;
 import com.hyphenate.EMCallBack;
@@ -54,7 +56,8 @@ public abstract class LiveBaseActivity extends BaseActivity {
   @BindView(R.id.periscope_layout) PeriscopeLayout periscopeLayout;
   @BindView(R.id.bottom_bar) View bottomBar;
 
-  @BindView(R.id.barrage_layout) BarrageLayout barrageLayout;
+  @BindView(R.id.barrage_layout)
+  BarrageLayout barrageLayout;
   @BindView(R.id.horizontal_recycle_view) RecyclerView horizontalRecyclerView;
   @BindView(R.id.audience_num) TextView audienceNumView;
   @BindView(R.id.new_messages_warn) ImageView newMsgNotifyImage;
@@ -239,7 +242,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
         }
         // 如果是当前会话的消息，刷新聊天页面
         if (username.equals(chatroomId)) {
-          if (message.getBooleanAttribute(DemoConstants.EXTRA_IS_BARRAGE_MSG, false)) {
+          if (message.getBooleanAttribute(LiveConstants.EXTRA_IS_BARRAGE_MSG, false)) {
             barrageLayout.addBarrage(((EMTextMessageBody) message.getBody()).getMessage(),
                 message.getFrom());
           }
@@ -260,7 +263,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
 
     @Override public void onCmdMessageReceived(List<EMMessage> messages) {
       EMMessage message = messages.get(messages.size() - 1);
-      if (DemoConstants.CMD_GIFT.equals(((EMCmdMessageBody) message.getBody()).action())) {
+      if (LiveConstants.CMD_GIFT.equals(((EMCmdMessageBody) message.getBody()).action())) {
         showLeftGiftVeiw(message.getFrom());
       }
     }
@@ -292,7 +295,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
           @Override public void onMessageSend(String content) {
             EMMessage message = EMMessage.createTxtSendMessage(content, chatroomId);
             if (messageView.isBarrageShow) {
-              message.setAttribute(DemoConstants.EXTRA_IS_BARRAGE_MSG, true);
+              message.setAttribute(LiveConstants.EXTRA_IS_BARRAGE_MSG, true);
               barrageLayout.addBarrage(content, EMClient.getInstance().getCurrentUser());
             }
             message.setChatType(EMMessage.ChatType.ChatRoom);
@@ -432,7 +435,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
   @OnClick(R.id.present_image) void onPresentImageClick() {
     EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CMD);
     message.setReceipt(chatroomId);
-    EMCmdMessageBody cmdMessageBody = new EMCmdMessageBody(DemoConstants.CMD_GIFT);
+    EMCmdMessageBody cmdMessageBody = new EMCmdMessageBody(LiveConstants.CMD_GIFT);
     message.addBody(cmdMessageBody);
     message.setChatType(EMMessage.ChatType.ChatRoom);
     EMClient.getInstance().chatManager().sendMessage(message);

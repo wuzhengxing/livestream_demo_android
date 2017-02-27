@@ -1,4 +1,4 @@
-package com.easemob.livedemo.ui.activity;
+package cn.ucai.live.ui.activity;
 
 
 import android.content.Context;
@@ -14,11 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.ucai.live.data.model.LiveRoom;
+
 import com.bumptech.glide.Glide;
-import com.easemob.livedemo.R;
-import com.easemob.livedemo.data.TestDataRepository;
-import com.easemob.livedemo.data.model.LiveRoom;
-import com.easemob.livedemo.ui.GridMarginDecoration;
+import cn.ucai.live.R;
+import cn.ucai.live.data.TestDataRepository;
+import cn.ucai.live.ui.GridMarginDecoration;
 import java.util.List;
 
 /**
