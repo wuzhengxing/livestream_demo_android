@@ -48,7 +48,7 @@ public class DbOpenHelper extends SQLiteOpenHelper{
 	}
 	
 	private static String getUserDatabaseName() {
-        return "";// SuperWeChatHelper.getInstance().getCurrentUsernName() + "_demo.db";
+        return "";// LiveHelper.getInstance().getCurrentUsernName() + "_demo.db";
     }
 	
 	@Override
