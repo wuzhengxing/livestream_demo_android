@@ -1,11 +1,11 @@
-package com.easemob.livedemo.data.model;
+package cn.ucai.live.data.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
-import com.easemob.livedemo.R;
+import cn.ucai.live.R;
 import com.ucloud.live.UEasyStreaming;
 
 

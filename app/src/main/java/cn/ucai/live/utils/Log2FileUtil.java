@@ -1,4 +1,4 @@
-package com.easemob.livedemo.utils;
+package cn.ucai.live.utils;
 
 import android.os.Environment;
 import android.util.Log;

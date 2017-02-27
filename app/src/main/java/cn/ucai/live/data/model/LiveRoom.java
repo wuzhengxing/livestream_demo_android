@@ -1,4 +1,4 @@
-package com.easemob.livedemo.data.model;
+package cn.ucai.live.data.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
