@@ -7,7 +7,7 @@ public class LiveConstants {
 //    public static final String EXT_IS_GIFT = "ext_is_gift";
     public static final String CMD_GIFT = "cmd_gift";
     public static final String EXTRA_IS_BARRAGE_MSG = "is_barrage_msg";
-    
+
     public static final String NEW_FRIENDS_USERNAME = "item_new_friends";
     public static final String GROUP_USERNAME = "item_groups";
     public static final String CHAT_ROOM = "item_chatroom";
