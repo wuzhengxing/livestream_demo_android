@@ -37,4 +37,8 @@ public class MFGT {
         startActivity(activity,new Intent(activity,MainActivity.class).
                 putExtra(I.BACK_MAIN_FROM_CHAT,isChat));
     }
+    public static void gotoLoginCleanTask(Activity activity) {
+        startActivity(activity,new Intent(activity,LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+    }
+
 }
