@@ -1148,4 +1148,30 @@ public class LiveHelper {
         LiveModel.saveAppContactList(mList);
     }
 
+    public void asyncGetCurrentUserInfo(Activity activity) {
+      NetDao.getUserInfoByUserName(activity, EMClient.getInstance().getCurrentUser(), new OnCompleteListener<String>() {
+              @Override
+              public void onSuccess(String str) {
+
+                  if (str != null) {
+                      Result result = ResultUtils.getResultFromJson(str, User.class);
+                      if (result != null) {
+                          if (result.isRetMsg()) {
+                              User user = (User) result.getRetData();
+                              if (user != null) {
+                                  Log.e(TAG, "user:" + user);
+                                 LiveHelper.getInstance().saveAppContact(user);
+                                  PreferenceManager.getInstance().setCurrentUserNick(user.getMUserNick());
+                                  PreferenceManager.getInstance().setCurrentUserAvatar(user.getAvatar());
+                              }
+                          }
+                      }
+                  }
+              }
+
+              @Override
+              public void onError(String error) {
+              }
+          });
+    }
 }
