@@ -77,7 +77,9 @@ public class LoginActivity extends BaseActivity {
         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
       }
     });
-
+    if (LiveHelper.getInstance().getCurrentUsernName() != null) {
+      mEmailView.setText(LiveHelper.getInstance().getCurrentUsernName());
+    }
 
   }
 
