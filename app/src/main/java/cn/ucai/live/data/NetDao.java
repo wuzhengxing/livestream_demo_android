@@ -1,11 +1,14 @@
 package cn.ucai.live.data;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 
 import cn.ucai.live.I;
 import cn.ucai.live.utils.MD5;
 import cn.ucai.live.utils.OkHttpUtils;
 import cn.ucai.live.utils.OnCompleteListener;
+import okhttp3.OkHttpClient;
+
 import com.hyphenate.chat.EMGroup;
 
 import java.io.File;
@@ -132,6 +135,12 @@ public class NetDao {
         OkHttpUtils<String> utils=new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_DELETE_GROUP)
                 .addParam(I.Member.GROUP_HX_ID,hxId)
+                .targetClass(String.class)
+                .execute(listener);
+    }
+    public static void loadLiveList(Context context, OnCompleteListener listener) {
+        OkHttpUtils<String> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_ALL_CHAT_ROOM)
                 .targetClass(String.class)
                 .execute(listener);
     }

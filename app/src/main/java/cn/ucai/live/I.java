@@ -211,6 +211,14 @@ public interface I {
 	/** 客户端发送的分页下载附近的人的请求 */
 	String REQUEST_DOWNLOAD_LOCATION 				= 		"downloadLocation";
 
+    String REQUEST_RECHARGE_STATEMENTS_PAGE         =        "live/getRechargeStatements";
+    String REQUEST_BALANCE                          =        "live/getBalance";
+    String REQUEST_ANCHOR_GIFTS                     =        "live/getAnchorGifts";
+    String REQUEST_GIVING_GIFTS                     =        "live/getGivingGifts";
+    String REQUEST_RECHARGE                         =        "live/getRecharge";
+    String REQUEST_ALL_CHAT_ROOM                    =        "live/getAllChatRoom";
+
+
 
 	 int REQUESTCODE_PICK = 1;
 	 int REQUESTCODE_CUTTING = 2;
