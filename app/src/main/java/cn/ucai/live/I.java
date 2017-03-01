@@ -4,6 +4,7 @@ public interface I {
 
 
 
+
 	public static interface User {
 		String TABLE_NAME							=		"t_superwechat_user";
 		String USER_NAME 							= 		"m_user_name";					//用户账号
@@ -134,7 +135,7 @@ public interface I {
 	int MSG_ILLEGAL_REQUEST							=		-1;								//非法请求
 
 //	String SERVER_ROOT = "http://120.26.242.249:8080/SuperWeChatServerV2.0/";
-	String SERVER_ROOT = "http://101.251.196.90:8000/SuperWeChatServerV2.0/";
+	String SERVER_ROOT = "http://101.251.196.91:8888/SuperWeChatServerV2.0/";
 
 	/** 上传头像图片的类型：user_avatar或group_icon */
 	String AVATAR_TYPE 								= 		"avatarType";
@@ -217,7 +218,7 @@ public interface I {
     String REQUEST_GIVING_GIFTS                     =        "live/getGivingGifts";
     String REQUEST_RECHARGE                         =        "live/getRecharge";
     String REQUEST_ALL_CHAT_ROOM                    =        "live/getAllChatRoom";
-
+	String REQUEST_CREATE_CHATROOM                  =        "createChatRoom";
 
 
 	 int REQUESTCODE_PICK = 1;
