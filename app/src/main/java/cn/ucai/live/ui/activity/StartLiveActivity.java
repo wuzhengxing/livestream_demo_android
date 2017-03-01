@@ -118,15 +118,18 @@ public class StartLiveActivity extends LiveBaseActivity
     chatroomId = TestDataRepository.getChatRoomId(EMClient.getInstance().getCurrentUser());
     anchorId = EMClient.getInstance().getCurrentUser();
     //usernameView.setText(anchorId);*/
-        initEnv();
-       /* String id = getIntent().getStringExtra("liveId");
+        //initEnv();
+       String id = getIntent().getStringExtra("liveId");
         if (id != null && !id.equals("")) {
             liveId = id;
             chatroomId = id;
             initEnv();
         }else {
-
-        }*/
+            pd = new ProgressDialog(this);
+            pd.setMessage("正在直播...");
+            pd.show();
+            createLive();
+        }
 
     }
 
@@ -213,12 +216,9 @@ public class StartLiveActivity extends LiveBaseActivity
      */
     @OnClick(R.id.btn_start)
     void startLive() {
-        pd = new ProgressDialog(this);
-        pd.setMessage("正在直播...");
-        pd.show();
-        createLive();
         //demo为了测试方便，只有指定的账号才能开启直播
-        if (liveId == null) {
+        if (liveId == null && liveId.equals("")) {
+            CommonUtils.showShortToast("获取直播数据失败");
       /*String[] anchorIds = TestDataRepository.anchorIds;
       StringBuilder sb = new StringBuilder();
       for (int i = 0; i < anchorIds.length; i++) {
@@ -228,7 +228,7 @@ public class StartLiveActivity extends LiveBaseActivity
       new EaseAlertDialog(this, "demo中只有" + sb.toString() + "这几个账户才能开启直播").show();*/
             return;
         }
-        //startLiveByChatRoom();
+        startLiveByChatRoom();
 
 
     }
@@ -270,7 +270,7 @@ public class StartLiveActivity extends LiveBaseActivity
                         if (id != null) {
                             Log.e(TAG, "ids=" + id);
                             initLive(id);
-                            startLiveByChatRoom();
+                            //startLiveByChatRoom();
                         }
                     }
                     if (!success) {
@@ -281,9 +281,12 @@ public class StartLiveActivity extends LiveBaseActivity
                 @Override
                 public void onError(String error) {
                     pd.dismiss();
-                    CommonUtils.showShortToast("创建直播失败");
+                    CommonUtils.showShortToast(error);
                 }
             });
+        }else {
+            pd.dismiss();
+            CommonUtils.showShortToast("创建直播失败");
         }
     }
 
