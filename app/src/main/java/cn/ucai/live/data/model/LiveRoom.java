@@ -87,6 +87,18 @@ public class LiveRoom implements Parcelable {
         this.anchorId = in.readString();
     }
 
+    @Override
+    public String toString() {
+        return "LiveRoom{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", audienceNum=" + audienceNum +
+                ", cover=" + cover +
+                ", chatroomId='" + chatroomId + '\'' +
+                ", anchorId='" + anchorId + '\'' +
+                '}';
+    }
+
     public static final Creator<LiveRoom> CREATOR = new Creator<LiveRoom>() {
         public LiveRoom createFromParcel(Parcel source) {
             return new LiveRoom(source);
