@@ -123,14 +123,11 @@ public class StartLiveActivity extends LiveBaseActivity
         if (id != null && !id.equals("")) {
             liveId = id;
             chatroomId = id;
-            initEnv();
-        }else {
-            pd = new ProgressDialog(this);
-            pd.setMessage("正在直播...");
-            pd.show();
-            createLive();
-        }
 
+        }else {
+            liveId=EMClient.getInstance().getCurrentUser();
+        }
+        initEnv();
     }
 
     public void initEnv() {
@@ -217,18 +214,15 @@ public class StartLiveActivity extends LiveBaseActivity
     @OnClick(R.id.btn_start)
     void startLive() {
         //demo为了测试方便，只有指定的账号才能开启直播
+        Log.e(TAG, "liveId=" + liveId + ",chatRoomId=" + chatroomId);
         if (liveId == null && liveId.equals("")) {
-            CommonUtils.showShortToast("获取直播数据失败");
-      /*String[] anchorIds = TestDataRepository.anchorIds;
-      StringBuilder sb = new StringBuilder();
-      for (int i = 0; i < anchorIds.length; i++) {
-        sb.append(anchorIds[i]);
-        if (i != (anchorIds.length - 1)) sb.append(",");
-      }
-      new EaseAlertDialog(this, "demo中只有" + sb.toString() + "这几个账户才能开启直播").show();*/
-            return;
+            pd = new ProgressDialog(this);
+            pd.setMessage("正在直播...");
+            pd.show();
+            createLive();
+        }else {
+            startLiveByChatRoom();
         }
-        startLiveByChatRoom();
 
 
     }
@@ -269,8 +263,8 @@ public class StartLiveActivity extends LiveBaseActivity
                         String id = ResultUtils.getEMResultFromJson(str);
                         if (id != null) {
                             Log.e(TAG, "ids=" + id);
-                            initLive(id);
-                            //startLiveByChatRoom();
+                            chatroomId = id;
+                            startLiveByChatRoom();
                         }
                     }
                     if (!success) {
@@ -290,11 +284,6 @@ public class StartLiveActivity extends LiveBaseActivity
         }
     }
 
-    private void initLive(String id) {
-        liveId = id;
-        chatroomId = id;
-        initEnv();
-    }
 
     /**
      * 关闭直播显示直播成果
