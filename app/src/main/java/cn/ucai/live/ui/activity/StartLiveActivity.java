@@ -121,10 +121,10 @@ public class StartLiveActivity extends LiveBaseActivity
     anchorId = EMClient.getInstance().getCurrentUser();
     //usernameView.setText(anchorId);*/
         //initEnv();
-       String id = getIntent().getStringExtra("liveId");
-        if (id != null && !id.equals("")) {
-            liveId = id;
-            chatroomId = id;
+       LiveRoom liveRoom = getIntent().getParcelableExtra("liveRoom");
+        if (liveRoom != null ) {
+            liveId = liveRoom.getId();
+            chatroomId = liveRoom.getChatroomId();
 
         }else {
             liveId=EMClient.getInstance().getCurrentUser();
@@ -218,7 +218,7 @@ public class StartLiveActivity extends LiveBaseActivity
     void startLive() {
         //demo为了测试方便，只有指定的账号才能开启直播
         Log.e(TAG, "liveId=" + liveId + ",chatRoomId=" + chatroomId);
-        if (liveId == null && liveId.equals("")) {
+        if (chatroomId == null || chatroomId.equals("")) {
             pd = new ProgressDialog(this);
             pd.setMessage("正在直播...");
             pd.show();
@@ -265,6 +265,7 @@ public class StartLiveActivity extends LiveBaseActivity
                     if (str != null) {
                         String id = ResultUtils.getEMResultFromJson(str);
                         if (id != null) {
+                            success = true;
                             Log.e(TAG, "ids=" + id);
                             chatroomId = id;
                             startLiveByChatRoom();
@@ -299,7 +300,7 @@ public class StartLiveActivity extends LiveBaseActivity
             return;
         }
         long endTime=System.currentTimeMillis();
-        long time = endTime - startTime;
+        long time = endTime - startTime-8*60*60*1000;
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
         String t = format.format(new Date(time));
         removeListRoom();

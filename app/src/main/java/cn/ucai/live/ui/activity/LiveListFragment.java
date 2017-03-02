@@ -89,12 +89,12 @@ public class LiveListFragment extends Fragment {
 
         recyclerView = (RecyclerView) getView().findViewById(R.id.recycleview);
 //        GridLayoutManager glm = (GridLayoutManager) recyclerView.getLayoutManager();
-       // adapter = new LiveAdapter(getContext(),getLiveRoomList(chatRoomList));
+        adapter = new LiveAdapter(getContext(),getLiveRoomList(chatRoomList));
         gm = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(gm);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new GridMarginDecoration(6));
-        //recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
 
      // View footView = getLayoutInflater().inflate(R.layout.em_listview_footer_view, listView, false);
         footLoadingLayout = (LinearLayout) getView().findViewById(R.id.loading_layout);
@@ -205,19 +205,16 @@ public class LiveListFragment extends Fragment {
                             if(isFirstLoading){
                                 //pb.setVisibility(View.INVISIBLE);
                                 isFirstLoading = false;
-                                adapter = new LiveAdapter(getContext(),getLiveRoomList(chatRoomList));
                                 //listView.setAdapter(adapter);
-                                recyclerView.setAdapter(adapter);
-
-                            }else{
+                                adapter.initData(getLiveRoomList(chatRoomList));
+                            }
+                            adapter.notifyDataSetChanged();
                                 if(chatRooms.size() < pagesize){
                                     hasMoreData = false;
                                     footLoadingLayout.setVisibility(View.VISIBLE);
                                     footLoadingPB.setVisibility(View.GONE);
                                     footLoadingText.setText("No more data");
                                 }
-                                adapter.notifyDataSetChanged();
-                            }
                             isLoading = false;
                         }
                     });
@@ -246,7 +243,7 @@ public class LiveListFragment extends Fragment {
             LiveRoom liveRoom = new LiveRoom();
             liveRoom.setName(room.getName());
             liveRoom.setAudienceNum(room.getAffiliationsCount());
-            liveRoom.setId(room.getId());
+            liveRoom.setId(room.getOwner());
             liveRoom.setChatroomId(room.getId());
             liveRoom.setCover(EaseUserUtils.getAppUserInfo(room.getOwner()).getAvatar());
             liveRoom.setAnchorId(room.getOwner());
@@ -279,7 +276,7 @@ public class LiveListFragment extends Fragment {
                     LiveRoom room = liveRoomList.get(position);
                     if (room.getAnchorId().equals(EMClient.getInstance().getCurrentUser())) {
                         context.startActivity(new Intent(context,StartLiveActivity.class)
-                                .putExtra("liveId",room.getId()));
+                                .putExtra("liveRoom",liveRoomList.get(position)));
                     }else {
                         context.startActivity(new Intent(context, LiveDetailsActivity.class)
                                 .putExtra("liveroom", liveRoomList.get(position)));
@@ -304,6 +301,11 @@ public class LiveListFragment extends Fragment {
         @Override
         public int getItemCount() {
             return liveRoomList.size();
+        }
+
+        public void initData(List<LiveRoom> liveRoomList) {
+            this.liveRoomList.clear();
+            this.liveRoomList.addAll(liveRoomList);
         }
     }
 

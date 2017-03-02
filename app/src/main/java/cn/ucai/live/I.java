@@ -214,9 +214,9 @@ public interface I {
 
     String REQUEST_RECHARGE_STATEMENTS_PAGE         =        "live/getRechargeStatements";
     String REQUEST_BALANCE                          =        "live/getBalance";
-    String REQUEST_ANCHOR_GIFTS                     =        "live/getAnchorGifts";
-    String REQUEST_GIVING_GIFTS                     =        "live/getGivingGifts";
-    String REQUEST_RECHARGE                         =        "live/getRecharge";
+    String REQUEST_ANCHOR_GIFT                     =        "live/getGiftStatementsByAnchor";
+    String REQUEST_GIVING_GIFTS                     =        "live/givingGifts";
+    String REQUEST_RECHARGE                         =        "live/recharge";
     String REQUEST_ALL_CHAT_ROOM                    =        "live/getAllChatRoom";
 	String REQUEST_CREATE_CHATROOM                  =        "live/createChatRoom";
 	String REQUEST_DELETE_CHATROOM                  =        "live/deleteChatRoom";

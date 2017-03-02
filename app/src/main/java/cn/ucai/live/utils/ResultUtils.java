@@ -78,7 +78,7 @@ public class ResultUtils {
         }
         return  null;
     }
-    public static <T> String getEMResultFromJson(String jsonStr){
+    public static  String getEMResultFromJson(String jsonStr){
         Log.e("Utils","jsonStr="+jsonStr);
         try {
             JSONObject jsonObject = new JSONObject(jsonStr);

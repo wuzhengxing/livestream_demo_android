@@ -37,6 +37,7 @@ import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.model.EaseNotifier;
 import com.hyphenate.easeui.model.EaseNotifier.EaseNotificationInfoProvider;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 
@@ -48,8 +49,10 @@ import java.util.Map;
 import java.util.UUID;
 
 import cn.ucai.live.data.NetDao;
+import cn.ucai.live.data.local.DbOpenHelper;
 import cn.ucai.live.data.local.LiveDBManager;
 import cn.ucai.live.data.local.UserDao;
+import cn.ucai.live.data.model.Gift;
 import cn.ucai.live.data.model.Result;
 import cn.ucai.live.ui.activity.ChatActivity;
 import cn.ucai.live.ui.activity.MainActivity;
@@ -83,6 +86,7 @@ public class LiveHelper {
     private Map<String, EaseUser> contactList;
 
     private Map<String, User> appContactList;
+    private Map<Integer, Gift> appGiftList;
 
 
     private static LiveHelper instance = null;
@@ -173,7 +177,30 @@ public class LiveHelper {
             setGlobalListeners();
             broadcastManager = LocalBroadcastManager.getInstance(appContext);
             initDbDao();
+            initGiftList();
         }
+    }
+
+    private void initGiftList() {
+        NetDao.loadAllGift(appContext, new OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String str) {
+                if (str != null) {
+                    Result result = ResultUtils.getListResultFromJson(str, Gift.class);
+                    if (result != null && result.isRetMsg()) {
+                        List<Gift> list = (List<Gift>) result.getRetData();
+                        LiveModel.saveAppGiftList(list);
+                        UserDao userdao = new UserDao(appContext);
+                        userdao.saveAppGiftList(list);
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
     }
 
 
@@ -1174,4 +1201,36 @@ public class LiveHelper {
               }
           });
     }
+    /**
+     * update contact list
+     *
+     * @param list
+     */
+    public void setAppGiftList(Map<Integer, Gift> list) {
+        if (list == null) {
+            if (appGiftList != null) {
+                appGiftList.clear();
+            }
+            return;
+        }
+        appGiftList = list;
+    }
+    /**
+     * get contact list
+     *
+     * @return
+     */
+    public Map<Integer, Gift> getAppGiftList() {
+        if (appGiftList == null || appGiftList.size()==0) {
+            appGiftList = LiveModel.getAppGiftList();
+        }
+
+        // return a empty non-null object to avoid app crash
+        if (appGiftList == null) {
+            return new Hashtable<Integer, Gift>();
+        }
+
+        return appGiftList;
+    }
+
 }
