@@ -174,6 +174,8 @@ public class LiveListFragment extends Fragment {
                 mtvRefresh.setVisibility(View.VISIBLE);
                 msrl.setRefreshing(true);
                 cursor = null;
+                isFirstLoading = true;
+                chatRoomList.clear();
                 loadAndShowData();
             }
         });
