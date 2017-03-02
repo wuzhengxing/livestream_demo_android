@@ -48,6 +48,8 @@ import com.ucloud.live.UEasyStreaming;
 import com.ucloud.live.UStreamingProfile;
 import com.ucloud.live.widget.UAspectFrameLayout;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -93,7 +95,7 @@ public class StartLiveActivity extends LiveBaseActivity
     ProgressDialog pd;
 
     boolean isStarted;
-
+    long startTime;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -167,6 +169,7 @@ public class StartLiveActivity extends LiveBaseActivity
                 Toast.makeText(this, event.toString(), Toast.LENGTH_LONG).show();
                 break;
             case UEasyStreaming.State.START_RECORDING:
+                startTime = System.currentTimeMillis();
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -295,8 +298,12 @@ public class StartLiveActivity extends LiveBaseActivity
             finish();
             return;
         }
+        long endTime=System.currentTimeMillis();
+        long time = endTime - startTime;
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        String t = format.format(new Date(time));
         removeListRoom();
-        showConfirmCloseLayout();
+        showConfirmCloseLayout(t);
     }
 
     private void removeListRoom() {
@@ -325,7 +332,7 @@ public class StartLiveActivity extends LiveBaseActivity
         }
     }
 
-    private void showConfirmCloseLayout() {
+    private void showConfirmCloseLayout(String t) {
         //显示封面
         coverImage.setVisibility(View.VISIBLE);
         List<LiveRoom> liveRoomList = TestDataRepository.getLiveRoomList();
@@ -338,8 +345,13 @@ public class StartLiveActivity extends LiveBaseActivity
         }*/
         View view = liveEndLayout.inflate();
         Button closeConfirmBtn = (Button) view.findViewById(R.id.live_close_confirm);
-        TextView usernameView = (TextView) view.findViewById(R.id.tv_username);
-        usernameView.setText(EMClient.getInstance().getCurrentUser());
+        TextView usernameView = (TextView) view.findViewById(R.id.tv_finish_username);
+        TextView showTime = (TextView) view.findViewById(R.id.tv_show_time);
+        EaseImageView avatar = (EaseImageView) view.findViewById(R.id.iv_finish_avatar);
+        EaseUserUtils.setAppUserAvatar(this,EMClient.getInstance().getCurrentUser(),avatar);
+        EaseUserUtils.setAppUserNick(EMClient.getInstance().getCurrentUser(),usernameView);
+        showTime.setText(t);
+        //usernameView.setText(EMClient.getInstance().getCurrentUser());
         closeConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
