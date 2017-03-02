@@ -295,7 +295,22 @@ public class StartLiveActivity extends LiveBaseActivity
             finish();
             return;
         }
+        removeListRoom();
         showConfirmCloseLayout();
+    }
+
+    private void removeListRoom() {
+        NetDao.deleteLive(this, chatroomId, new OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String result) {
+
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
     }
 
     @OnClick(R.id.img_bt_switch_voice)

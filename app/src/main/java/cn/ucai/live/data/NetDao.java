@@ -150,11 +150,19 @@ public class NetDao {
         OkHttpUtils<String> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_CREATE_CHATROOM)
                 .addParam("auth","1IFgE")
-                .addParam("name",user.getMUserNick()+"的直播")
-                .addParam("description",user.getMUserNick()+"的直播")
+                .addParam("name",user.getMUserNick())
+                .addParam("description",user.getMUserNick())
                 .addParam("owner",user.getMUserName())
                 .addParam("maxusers","300")
                 .addParam("members",user.getMUserName())
+                .targetClass(String.class)
+                .execute(listener);
+    }
+    public static void deleteLive(Context context, String chatRoomId, OnCompleteListener<String> listener) {
+        OkHttpUtils<String> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_DELETE_CHATROOM)
+                .addParam("auth","1IFgE")
+                .addParam("chatRoomId",chatRoomId)
                 .targetClass(String.class)
                 .execute(listener);
     }

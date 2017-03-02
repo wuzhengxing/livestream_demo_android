@@ -250,7 +250,6 @@ public class LiveListFragment extends Fragment {
             liveRoom.setChatroomId(room.getId());
             liveRoom.setCover(EaseUserUtils.getAppUserInfo(room.getOwner()).getAvatar());
             liveRoom.setAnchorId(room.getOwner());
-            Log.e(TAG, "liveRoom=" + liveRoom);
             roomList.add(liveRoom);
         }
 
