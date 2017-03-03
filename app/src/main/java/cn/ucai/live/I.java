@@ -3,6 +3,7 @@ package cn.ucai.live;
 public interface I {
 
 
+	String TYPE_GIFT ="cn.ucai.live.gift" ;
 
 
 	public static interface User {
@@ -220,7 +221,7 @@ public interface I {
     String REQUEST_ALL_CHAT_ROOM                    =        "live/getAllChatRoom";
 	String REQUEST_CREATE_CHATROOM                  =        "live/createChatRoom";
 	String REQUEST_DELETE_CHATROOM                  =        "live/deleteChatRoom";
-
+	String REQUEST_All_GIGTS                        =        "live/getAllGifts";
 
 	 int REQUESTCODE_PICK = 1;
 	 int REQUESTCODE_CUTTING = 2;
