@@ -1,16 +1,20 @@
 package cn.ucai.live.ui.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -18,7 +22,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.live.I;
 import cn.ucai.live.LiveConstants;
+import cn.ucai.live.LiveHelper;
+import cn.ucai.live.data.model.Gift;
 import cn.ucai.live.ui.widget.BarrageLayout;
+import cn.ucai.live.utils.PreferenceManager;
 import cn.ucai.live.utils.Utils;
 
 import com.bumptech.glide.Glide;
@@ -450,11 +457,45 @@ public abstract class LiveBaseActivity extends BaseActivity {
       @Override
       public void onClick(View view) {
         int id= (int) view.getTag();
-        sendPresent(id);
+        showPayMentTip(dialog,id);
       }
     });
   }
-  private void sendPresent(int id){
+  private void showPayMentTip(final RoomGiftListDialog dialog, final int id){
+    if (PreferenceManager.getInstance().getPaymentTip()) {
+      sendPresent(dialog,id);
+    }else {
+      Gift gift = LiveHelper.getInstance().getAppGiftList().get(id);
+      AlertDialog.Builder builder = new AlertDialog.Builder(this);
+      View view = getLayoutInflater().inflate(R.layout.payment_tip, null);
+      builder.setTitle("提示")
+              .setMessage("需要支付"+gift.getGprice()+"元，确认支付吗？");
+      CheckBox cb = (CheckBox) view.findViewById(R.id.payment_tips_nomore);
+      cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+          PreferenceManager.getInstance().setPaymentTip(isChecked);
+        }
+      });
+      builder.setView(view);
+      builder.setNegativeButton("确认", new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+          sendPresent(dialog, id);
+        }
+      });
+      builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+          dialog.dismiss();
+        }
+      });
+      builder.create().show();
+
+    }
+  }
+  private void sendPresent(RoomGiftListDialog dialog,int id){
+    dialog.dismiss();
     EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CMD);
     message.setReceipt(chatroomId);
     EMCmdMessageBody cmdMessageBody = new EMCmdMessageBody(LiveConstants.CMD_GIFT);
