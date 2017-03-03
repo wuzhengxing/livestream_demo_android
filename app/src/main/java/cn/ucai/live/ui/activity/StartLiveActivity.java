@@ -121,7 +121,7 @@ public class StartLiveActivity extends LiveBaseActivity
     anchorId = EMClient.getInstance().getCurrentUser();
     //usernameView.setText(anchorId);*/
         //initEnv();
-       LiveRoom liveRoom = getIntent().getParcelableExtra("liveRoom");
+       LiveRoom liveRoom = getIntent().getParcelableExtra("liveroom");
         if (liveRoom != null ) {
             liveId = liveRoom.getId();
             chatroomId = liveRoom.getChatroomId();

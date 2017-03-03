@@ -189,9 +189,20 @@ public class LiveHelper {
                     Result result = ResultUtils.getListResultFromJson(str, Gift.class);
                     if (result != null && result.isRetMsg()) {
                         List<Gift> list = (List<Gift>) result.getRetData();
-                        LiveModel.saveAppGiftList(list);
-                        UserDao userdao = new UserDao(appContext);
-                        userdao.saveAppGiftList(list);
+                        if (list != null && list.size() > 0) {
+                            Log.e(TAG, "gift list=" + list.size());
+                            Map<Integer, Gift> giftlist = new HashMap<>();
+                            for (Gift gift : list) {
+                                giftlist.put(gift.getId(), gift);
+                            }
+                            // save the contact list to cache
+                            getAppGiftList().clear();
+                            getAppGiftList().putAll(giftlist);
+                            // save the contact list to database
+                            UserDao dao = new UserDao(appContext);
+                            List<Gift> gifts = new ArrayList<Gift>(giftlist.values());
+                            dao.saveAppGiftList(gifts);
+                        }
                     }
                 }
             }
@@ -250,7 +261,7 @@ public class LiveHelper {
             }
         });
 
-        //set options 
+        //set options
         easeUI.setSettingsProvider(new EaseSettingsProvider() {
 
             @Override
@@ -355,23 +366,23 @@ public class LiveHelper {
             @Override
             public Intent getLaunchIntent(EMMessage message) {
                 // you can set what activity you want display when user click the notification
-               Intent intent = new Intent(appContext, ChatActivity.class);
+                Intent intent = new Intent(appContext, ChatActivity.class);
                 // open calling activity if there is call
 
-                    ChatType chatType = message.getChatType();
-                    if (chatType == ChatType.Chat) { // single chat message
-                        intent.putExtra("userId", message.getFrom());
-                        intent.putExtra("chatType", LiveConstants.CHATTYPE_SINGLE);
-                    } else { // group chat message
-                        // message.getTo() is the group id
-                        intent.putExtra("userId", message.getTo());
-                        if (chatType == ChatType.GroupChat) {
-                            intent.putExtra("chatType", LiveConstants.CHATTYPE_GROUP);
-                        } else {
-                            intent.putExtra("chatType", LiveConstants.CHATTYPE_CHATROOM);
-                        }
-
+                ChatType chatType = message.getChatType();
+                if (chatType == ChatType.Chat) { // single chat message
+                    intent.putExtra("userId", message.getFrom());
+                    intent.putExtra("chatType", LiveConstants.CHATTYPE_SINGLE);
+                } else { // group chat message
+                    // message.getTo() is the group id
+                    intent.putExtra("userId", message.getTo());
+                    if (chatType == ChatType.GroupChat) {
+                        intent.putExtra("chatType", LiveConstants.CHATTYPE_GROUP);
+                    } else {
+                        intent.putExtra("chatType", LiveConstants.CHATTYPE_CHATROOM);
                     }
+
+                }
 
                 return intent;
             }
@@ -1108,7 +1119,7 @@ public class LiveHelper {
 
         setAppContactList(null);
         setContactList(null);
-       LiveDBManager.getInstance().closeDB();
+        LiveDBManager.getInstance().closeDB();
     }
 
     public void pushActivity(Activity activity) {
@@ -1176,31 +1187,32 @@ public class LiveHelper {
     }
 
     public void asyncGetCurrentUserInfo(Activity activity) {
-      NetDao.getUserInfoByUserName(activity, EMClient.getInstance().getCurrentUser(), new OnCompleteListener<String>() {
-              @Override
-              public void onSuccess(String str) {
+        NetDao.getUserInfoByUserName(activity, EMClient.getInstance().getCurrentUser(), new OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String str) {
 
-                  if (str != null) {
-                      Result result = ResultUtils.getResultFromJson(str, User.class);
-                      if (result != null) {
-                          if (result.isRetMsg()) {
-                              User user = (User) result.getRetData();
-                              if (user != null) {
-                                  Log.e(TAG, "user:" + user);
-                                 LiveHelper.getInstance().saveAppContact(user);
-                                  PreferenceManager.getInstance().setCurrentUserNick(user.getMUserNick());
-                                  PreferenceManager.getInstance().setCurrentUserAvatar(user.getAvatar());
-                              }
-                          }
-                      }
-                  }
-              }
+                if (str != null) {
+                    Result result = ResultUtils.getResultFromJson(str, User.class);
+                    if (result != null) {
+                        if (result.isRetMsg()) {
+                            User user = (User) result.getRetData();
+                            if (user != null) {
+                                Log.e(TAG, "user:" + user);
+                                LiveHelper.getInstance().saveAppContact(user);
+                                PreferenceManager.getInstance().setCurrentUserNick(user.getMUserNick());
+                                PreferenceManager.getInstance().setCurrentUserAvatar(user.getAvatar());
+                            }
+                        }
+                    }
+                }
+            }
 
-              @Override
-              public void onError(String error) {
-              }
-          });
+            @Override
+            public void onError(String error) {
+            }
+        });
     }
+
     /**
      * update contact list
      *
@@ -1215,13 +1227,14 @@ public class LiveHelper {
         }
         appGiftList = list;
     }
+
     /**
      * get contact list
      *
      * @return
      */
     public Map<Integer, Gift> getAppGiftList() {
-        if (appGiftList == null || appGiftList.size()==0) {
+        if (appGiftList == null || appGiftList.size() == 0) {
             appGiftList = LiveModel.getAppGiftList();
         }
 
