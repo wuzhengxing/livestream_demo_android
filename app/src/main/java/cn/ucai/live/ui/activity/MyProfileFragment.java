@@ -29,8 +29,10 @@ public class MyProfileFragment extends Fragment {
     //Spinner spinner;
     //@BindView(R.id.frame_rate)
     //TextView frameRateText;
-    @BindView(R.id.tv_username) TextView usernameView;
-    @BindView(R.id.iv_avatar) EaseImageView userAvatar;
+    @BindView(R.id.tv_username)
+    TextView usernameView;
+    @BindView(R.id.iv_avatar)
+    EaseImageView userAvatar;
 
 
     LiveSettings liveSettings;
@@ -47,9 +49,9 @@ public class MyProfileFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-       // usernameView.setText(EMClient.getInstance().getCurrentUser());
-        EaseUserUtils.setAppUserAvatar(getContext(),EMClient.getInstance().getCurrentUser(),userAvatar);
-        EaseUserUtils.setAppUserNick(EMClient.getInstance().getCurrentUser(),usernameView);
+        // usernameView.setText(EMClient.getInstance().getCurrentUser());
+        EaseUserUtils.setAppUserAvatar(getContext(), EMClient.getInstance().getCurrentUser(), userAvatar);
+        EaseUserUtils.setAppUserNick(EMClient.getInstance().getCurrentUser(), usernameView);
 
 
         //liveSettings = new LiveSettings(getContext());
@@ -74,13 +76,14 @@ public class MyProfileFragment extends Fragment {
 
     }
 
-    @OnClick(R.id.btn_logout) void onLogout(){
+    @OnClick(R.id.btn_logout)
+    void onLogout() {
         LiveHelper.getInstance().logout(false, new EMCallBack() {
             @Override
             public void onSuccess() {
                 getActivity().finish();
                 MFGT.gotoLoginCleanTask(getActivity());
-               // startActivity(new Intent(getActivity(), LoginActivity.class));
+                // startActivity(new Intent(getActivity(), LoginActivity.class));
             }
 
             @Override
@@ -117,4 +120,10 @@ public class MyProfileFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+    @OnClick(R.id.layout_gift)
+    public void showChange() {
+        MFGT.gotoChange(getActivity());
+    }
 }
+

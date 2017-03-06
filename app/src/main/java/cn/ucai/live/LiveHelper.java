@@ -54,8 +54,10 @@ import cn.ucai.live.data.local.LiveDBManager;
 import cn.ucai.live.data.local.UserDao;
 import cn.ucai.live.data.model.Gift;
 import cn.ucai.live.data.model.Result;
+import cn.ucai.live.data.model.Wallet;
 import cn.ucai.live.ui.activity.ChatActivity;
 import cn.ucai.live.ui.activity.MainActivity;
+import cn.ucai.live.utils.CommonUtils;
 import cn.ucai.live.utils.OnCompleteListener;
 import cn.ucai.live.utils.PreferenceManager;
 import cn.ucai.live.utils.ResultUtils;
@@ -1209,6 +1211,28 @@ public class LiveHelper {
 
             @Override
             public void onError(String error) {
+            }
+        });
+        NetDao.loadChange(activity, username, new OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String str) {
+                boolean success = false;
+                if (str != null) {
+                    Result result = ResultUtils.getResultFromJson(str, Wallet.class);
+                    if (result != null && result.isRetMsg()) {
+                        success = true;
+                       Wallet wallet= (Wallet) result.getRetData();
+                        PreferenceManager.getInstance().setCurrentuserChange(wallet.getBalance());
+                    }
+                }
+                if (!success) {
+                    PreferenceManager.getInstance().setCurrentuserChange(0);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                CommonUtils.showShortToast(error);
             }
         });
     }
