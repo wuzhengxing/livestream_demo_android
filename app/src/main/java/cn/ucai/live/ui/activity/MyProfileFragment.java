@@ -1,6 +1,5 @@
 package cn.ucai.live.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,20 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import cn.ucai.live.LiveHelper;
-import cn.ucai.live.data.model.LiveSettings;
-
-import cn.ucai.live.R;
-import cn.ucai.live.utils.MFGT;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseImageView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.ucai.live.LiveHelper;
+import cn.ucai.live.R;
+import cn.ucai.live.data.model.LiveSettings;
+import cn.ucai.live.utils.MFGT;
 
 public class MyProfileFragment extends Fragment {
     Unbinder unbinder;
@@ -121,8 +120,9 @@ public class MyProfileFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.layout_gift)
-    public void showChange() {
+
+    @OnClick(R.id.layout_change)
+    public void gotoChange() {
         MFGT.gotoChange(getActivity());
     }
 }

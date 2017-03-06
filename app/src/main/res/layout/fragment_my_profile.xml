@@ -106,6 +106,7 @@
   </LinearLayout>
 
   <RelativeLayout
+      android:id="@+id/layout_change"
       android:layout_marginTop="10dp"
       android:layout_width="match_parent"
       android:layout_height="@dimen/item_normal_height"
@@ -117,7 +118,7 @@
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:textColor="@color/common_black"
-        android:text="V1.0"
+        android:text="我的钱包"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         />

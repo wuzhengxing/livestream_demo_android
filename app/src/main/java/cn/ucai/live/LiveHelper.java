@@ -1232,6 +1232,7 @@ public class LiveHelper {
 
             @Override
             public void onError(String error) {
+                PreferenceManager.getInstance().setCurrentuserChange(0);
                 CommonUtils.showShortToast(error);
             }
         });
