@@ -23,9 +23,15 @@ import butterknife.OnClick;
 import cn.ucai.live.I;
 import cn.ucai.live.LiveConstants;
 import cn.ucai.live.LiveHelper;
+import cn.ucai.live.data.NetDao;
 import cn.ucai.live.data.model.Gift;
+import cn.ucai.live.data.model.Result;
+import cn.ucai.live.data.model.Wallet;
 import cn.ucai.live.ui.widget.BarrageLayout;
+import cn.ucai.live.utils.CommonUtils;
+import cn.ucai.live.utils.OnCompleteListener;
 import cn.ucai.live.utils.PreferenceManager;
+import cn.ucai.live.utils.ResultUtils;
 import cn.ucai.live.utils.Utils;
 
 import com.bumptech.glide.Glide;
@@ -465,7 +471,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
     if (PreferenceManager.getInstance().getPaymentTip()) {
       sendPresent(dialog,id);
     }else {
-      Gift gift = LiveHelper.getInstance().getAppGiftList().get(id);
+      final Gift gift = LiveHelper.getInstance().getAppGiftList().get(id);
       AlertDialog.Builder builder = new AlertDialog.Builder(this);
       View view = getLayoutInflater().inflate(R.layout.payment_tip, null);
       builder.setTitle("提示")
@@ -481,7 +487,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
       builder.setNegativeButton("确认", new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialogInterface, int i) {
-          sendPresent(dialog, id);
+          givingGift(dialog,gift);
         }
       });
       builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
@@ -492,6 +498,51 @@ public abstract class LiveBaseActivity extends BaseActivity {
       });
       builder.create().show();
 
+    }
+  }
+  private void givingGift(final RoomGiftListDialog dialog, final Gift gift){
+    int change = PreferenceManager.getInstance().getCurrentuserChange();
+    if (change > gift.getGprice()) {
+      NetDao.giveGift(this, EMClient.getInstance().getCurrentUser(), chatroom.getOwner(), gift.getId(), 1, new OnCompleteListener<String>() {
+        @Override
+        public void onSuccess(String str) {
+          boolean success = false;
+          if (str != null) {
+            Result result = ResultUtils.getResultFromJson(str, Wallet.class);
+            if (result != null && result.isRetMsg()) {
+              success = true;
+              Wallet wallet= (Wallet) result.getRetData();
+              PreferenceManager.getInstance().setCurrentuserChange(wallet.getBalance());
+              sendPresent(dialog,gift.getId());
+            }
+          }
+          if (!success) {
+            CommonUtils.showShortToast("打赏失败!");
+          }
+        }
+
+        @Override
+        public void onError(String error) {
+          CommonUtils.showShortToast("打赏失败!");
+        }
+      });
+    }else {
+      AlertDialog.Builder builder = new AlertDialog.Builder(this);
+      builder.setTitle("充值")
+              .setMessage("该礼物需要支付"+gift.getGprice()+"元，您的余额不足，确定支付吗？");
+      builder.setNegativeButton("确认", new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+          dialog.dismiss();
+        }
+      });
+      builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+          dialog.dismiss();
+        }
+      });
+      builder.create().show();
     }
   }
   private void sendPresent(RoomGiftListDialog dialog,int id){
